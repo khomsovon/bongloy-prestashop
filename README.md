@@ -83,36 +83,36 @@ If the setting for `Sandbox` is set to `Yes`, the keys for TEST will be used. If
 
 In file `modules/omise/classes/omise_charge_class.php`
 
-```php
-36 - 'card' => $card_token,
-36 + 'source' => $card_token,
+```diff
+- 'card' => $card_token,
++ 'source' => $card_token,
 ```
 
 `modules/omise/vendor/omise/omise-php/lib/omise/res/OmiseApiResource.php`
 
-```php
-7 - define('OMISE_API_URL', 'https://api.omise.co/');
-7 + define('OMISE_API_URL', 'https://api.bongloy.com/v1/');
+```diff
+- define('OMISE_API_URL', 'https://api.omise.co/');
++ define('OMISE_API_URL', 'https://api.bongloy.com/v1/');
 ```
 `/modules/omise/views/templates/hook/1.7/card_payment.tpl`
 
-```js
-64 - <script src="https://cdn.omise.co/omise.js.gz"></script>
-64 + <script src="https://js.bongloy.com/v3"></script>
+```diff
+- <script src="https://cdn.omise.co/omise.js.gz"></script>
++ <script src="https://js.bongloy.com/v3"></script>
 ```
-```js
-80 - Omise.setPublicKey('{$omise_public_key}');
-81 - Omise.createToken('card', card, omiseCreateTokenCallback);
-80 + Bongloy.setPublicKey('{$omise_public_key}');
-81 + Bongloy.createToken('card', card, omiseCreateTokenCallback);
+```diff
+- Omise.setPublicKey('{$omise_public_key}');
+- Omise.createToken('card', card, omiseCreateTokenCallback);
++ Bongloy.setPublicKey('{$omise_public_key}');
++ Bongloy.createToken('card', card, omiseCreateTokenCallback);
 ```
-```js
-111 - if (statusCode === 200) {
-111 + if (statusCode === 201) {
+```diff
+- if (statusCode === 200) {
++ if (statusCode === 201) {
 ```
-```js
-139 - if (typeof Omise === 'undefined') {
-139 + if (typeof Bongloy === 'undefined') {
+```diff
+- if (typeof Omise === 'undefined') {
++ if (typeof Bongloy === 'undefined') {
 ```
 
 If you face this problem
@@ -122,6 +122,8 @@ SSL certificate problem: unable to get local issuer certificate
 ```
 You can download new certificate http://curl.haxx.se/ca/cacert.pem and replace it in
 `modules/omise/vendor/omise/omise-php/data/ca_certificates.pem`
+
+> **Note:** for public key and secret key you must to use Bongloy instead that you can find [here](https://sandbox.bongloy.com)
 
 
 ## Contributing
